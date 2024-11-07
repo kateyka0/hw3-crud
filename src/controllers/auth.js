@@ -10,6 +10,7 @@ import {
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
+  try{
   const user = await registerUser(req.body);
 
   res.status(201).json({
@@ -17,6 +18,15 @@ export const registerUserController = async (req, res) => {
     message: 'Successfully registered a user!',
     data: user,
   });
+} catch (error) {
+  console.error('Error in registerUserController:', error.message);
+  res.status(500).json({
+    message: 'Internal Server Error',
+    data: {
+      message: error.message,
+    },
+  });
+}
 };
 
 export const loginUserController = async (req, res) => {
