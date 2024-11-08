@@ -31,7 +31,7 @@ export const registerUserController = async (req, res) => {
 
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
-
+try{
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + THIRTY_DAYS),
@@ -48,6 +48,15 @@ export const loginUserController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+} catch (error) {
+    console.error('Error in loginUserController:', error.message);
+    res.status(500).json({
+      message: 'InternalServerError',
+      data: {
+        message: error.message,
+      },
+    });
+  }
 };
 
 const setupSession = (res, session) => {
@@ -62,6 +71,7 @@ const setupSession = (res, session) => {
 };
 
 export const refreshUsersSessionController = async (req, res) => {
+  try{
   const session = await refreshUsersSession({
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
@@ -76,6 +86,15 @@ export const refreshUsersSessionController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+}catch (error) {
+    console.error('Error in refreshUserSessionController:', error.message);
+    res.status(500).json({
+      message: 'InternalServerError',
+      data: {
+        message: error.message,
+      },
+    });
+  }
 };
 
 export const logoutUserController = async (req, res) => {
@@ -90,19 +109,38 @@ export const logoutUserController = async (req, res) => {
 };
 
 export const sendResetEmailController = async (req, res) => {
+ try{
   await sendResetToken(req.body.email);
   res.json({
     status: 200,
     message: 'Reset password email has been successfully sent.',
     data: {},
   });
+}catch (error) {
+    console.error('Error in sendtResetEmailController:', error.message);
+    res.status(500).json({
+      message: 'InternalServerError',
+      data: {
+        message: 'Failed to send the email, please try again later.',
+      },
+    });
+  }
 };
 
 export const resetPasswordController = async (req, res) => {
+  try{
   await resetPassword(req.body);
   res.json({
     status: 200,
     message: 'Password has been successfully reset.',
     data: {},
   });
+}catch (error) {
+    res.status(500).json({
+      message: 'InternalServerError',
+      data: {
+        message: error.message,
+      },
+    });
+  }
 };
