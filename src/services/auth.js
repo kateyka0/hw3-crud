@@ -37,8 +37,7 @@ export const loginUser = async (payload) => {
   }
 
   await SessionCollection.deleteOne({ userId: user._id });
-
-  const accessToken = randomBytes(30).toString('base64');
+  const accessToken = jwt.sign({"email": user.email, "sub": user._id}, env('JWT_SECRET'));
   const refreshToken = randomBytes(30).toString('base64');
 
   return await SessionCollection.create({
@@ -100,8 +99,8 @@ export const sendResetToken = async (email) => {
   }
   const resetToken = jwt.sign(
     {
-      sub: user._id,
-      email,
+      "sub": user._id,
+      "email": email,
     },
     env('JWT_SECRET'),
     { expiresIn: '5m' },
@@ -142,9 +141,13 @@ export const resetPassword = async (payload) => {
   try {
     entries = jwt.verify(payload.token, env('JWT_SECRET'));
   } catch (err) {
-    if (err instanceof Error)
+    if (err instanceof Error) {
+      console.log(err);
       throw createHttpError(401, 'Token is expired or invalid.');
-    throw err;
+    } else {
+      console.log(err);
+      throw err;
+    }
   }
 
   const user = await UsersCollection.findOne({

@@ -128,19 +128,19 @@ export const sendResetEmailController = async (req, res) => {
 };
 
 export const resetPasswordController = async (req, res) => {
-  try{
-  await resetPassword(req.body);
-  res.json({
-    status: 200,
-    message: 'Password has been successfully reset.',
-    data: {},
-  });
-}catch (error) {
-    res.status(500).json({
-      message: 'InternalServerError',
-      data: {
-        message: error.message,
-      },
+  try {
+    await resetPassword(req.body);
+    res.json({
+      status: 200,
+      message: 'Password has been successfully reset.',
+      data: {},
     });
-  }
+  } catch (error) {
+      res.status(500).json({
+        message: 'InternalServerError',
+        data: {
+          message: error.message,
+        },
+      });
+    }
 };
