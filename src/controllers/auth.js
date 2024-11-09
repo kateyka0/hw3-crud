@@ -109,6 +109,7 @@ export const logoutUserController = async (req, res) => {
 };
 
 export const sendResetEmailController = async (req, res) => {
+ 
  try{
   await sendResetToken(req.body.email);
   res.json({
@@ -117,7 +118,7 @@ export const sendResetEmailController = async (req, res) => {
     data: {},
   });
 }catch (error) {
-    console.error('Error in sendtResetEmailController:', error.message);
+    console.error('121, Error in sendtResetEmailController:', error.message);
     res.status(500).json({
       message: 'InternalServerError',
       data: {
