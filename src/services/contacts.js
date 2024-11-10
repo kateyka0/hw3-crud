@@ -2,6 +2,7 @@ import { ContactsCollection } from '../models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { SORT_ORDER } from '../constants/index.js';
 
+
 export const getAllContacts = async ({
   page = 1,
   perPage = 10,
@@ -42,6 +43,8 @@ export const getContactById = async (contactId, userId) => {
 };
 
 export const createContact = async (payload) => {
+  console.log("46", payload);
+  
   const contact = await ContactsCollection.create(payload);
   return contact;
 };
