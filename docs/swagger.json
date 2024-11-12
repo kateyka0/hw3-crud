@@ -21,10 +21,6 @@
     {
       "name": "Contacts",
       "description": "Operations about users."
-    },
-    {
-      "name": "Auth",
-      "description": "Auth operations."
     }
   ],
   "components": {
