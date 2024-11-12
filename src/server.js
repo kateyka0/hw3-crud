@@ -7,6 +7,9 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import cookieParser from 'cookie-parser';
 import { sendEmailError } from './middlewares/sendEmailError.js';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+import path from 'path';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -24,6 +27,10 @@ export const setupServer = () => {
       },
     }),
   );
+
+  const swaggerDocument = YAML.load(path.join(__dirname, '../docs/openapi.yaml'));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  
 
   app.use(router);
 
