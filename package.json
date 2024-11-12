@@ -12,7 +12,11 @@
     "add-one": "node src/scripts/addOneContact.js",
     "count": "node src/scripts/countContacts.js",
     "remove-last": "node src/scripts/removeLastContact.js",
-    "remove-all": "node src/scripts/removeAllContacts.js"
+    "remove-all": "node src/scripts/removeAllContacts.js",
+    
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +24,7 @@
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@faker-js/faker": "^9.0.3",
+    "@redocly/cli": "^1.25.11",
     "eslint": "^9.12.0",
     "globals": "^15.10.0",
     "nodemon": "^3.1.7",
