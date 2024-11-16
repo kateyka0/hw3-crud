@@ -29,7 +29,7 @@ requestBody:
           email:
             description: "Contact's age"
             type: string
-            example: oleh9@example.com
+            example: katya@example.com
           isFavorite:
             description: 'Is this your favorite contact?'
             type: boolean
