@@ -174,8 +174,7 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "contactType",
-                  "userId"
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
@@ -195,8 +194,11 @@
                   },
                   "isFavorite": {
                     "description": "Is this your favorite contact?",
-                    "type": "boolean",
-                    "example": true
+                    "type": "string",
+                    "example": [
+                      "true",
+                      "false"
+                    ]
                   },
                   "contactType": {
                     "description": "Type of phone number",
@@ -209,7 +211,9 @@
                   },
                   "photo": {
                     "description": "Link to contact's photo",
-                    "type": "string"
+                    "type": "string",
+                    "format": "binary",
+                    "default": null
                   }
                 }
               }
@@ -363,8 +367,11 @@
                   },
                   "isFavorite": {
                     "description": "Is this your favorite contact?",
-                    "type": "boolean",
-                    "example": true
+                    "type": "string",
+                    "example": [
+                      "true",
+                      "false"
+                    ]
                   },
                   "contactType": {
                     "description": "Type of phone number",
@@ -377,7 +384,9 @@
                   },
                   "photo": {
                     "description": "Link to contact's photo",
-                    "type": "string"
+                    "type": "string",
+                    "format": "binary",
+                    "default": null
                   }
                 }
               }
@@ -473,8 +482,6 @@
           "_id",
           "name",
           "phoneNumber",
-          "email",
-          "isFavourite",
           "contactType"
         ],
         "properties": {
@@ -520,7 +527,9 @@
           "photo": {
             "description": "Link to contact's photo",
             "type": "string",
-            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+            "format": "binary",
+            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png",
+            "default": null
           }
         }
       }

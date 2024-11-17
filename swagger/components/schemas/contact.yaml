@@ -3,8 +3,6 @@ required:
   - _id
   - name
   - phoneNumber
-  - email
-  - isFavourite
   - contactType
 properties:
   _id:
@@ -38,4 +36,6 @@ properties:
   photo:
     description: "Link to contact's photo"
     type: string
+    format: binary
     example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
+    default: null

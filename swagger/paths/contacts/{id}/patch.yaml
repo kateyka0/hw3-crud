@@ -32,8 +32,8 @@ requestBody:
             example: katya@example.com
           isFavorite:
             description: 'Is this your favorite contact?'
-            type: boolean
-            example: true
+            type: string
+            example: ['true', 'false']
           contactType:
             description: 'Type of phone number'
             type: string
@@ -41,6 +41,8 @@ requestBody:
           photo:
             description: "Link to contact's photo"
             type: string
+            format: binary
+            default: null
 responses:
   '201':
     description: Update a contact
