@@ -32,8 +32,8 @@ requestBody:
             example: katya@example.com
           isFavorite:
             description: 'Is this your favorite contact?'
-            type: string
-            example: ['true', 'false']
+            type: boolean
+            example: true
           contactType:
             description: 'Type of phone number'
             type: string
@@ -68,3 +68,5 @@ responses:
     $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'
+  '409':
+    $ref: '../../../components/responses/409.yaml'

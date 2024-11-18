@@ -56,15 +56,6 @@
           },
           {
             "in": "query",
-            "name": "sortBy",
-            "schema": {
-              "type": "string",
-              "example": "age"
-            },
-            "description": "All student's fields can be mentioned. Default value - _id"
-          },
-          {
-            "in": "query",
             "name": "sortOrder",
             "schema": {
               "type": "string",
@@ -151,6 +142,9 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
           }
         }
       },
@@ -194,11 +188,8 @@
                   },
                   "isFavorite": {
                     "description": "Is this your favorite contact?",
-                    "type": "string",
-                    "example": [
-                      "true",
-                      "false"
-                    ]
+                    "type": "boolean",
+                    "example": true
                   },
                   "contactType": {
                     "description": "Type of phone number",
@@ -255,6 +246,9 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
           }
         }
       }
@@ -318,6 +312,9 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
           }
         }
       },
@@ -367,11 +364,8 @@
                   },
                   "isFavorite": {
                     "description": "Is this your favorite contact?",
-                    "type": "string",
-                    "example": [
-                      "true",
-                      "false"
-                    ]
+                    "type": "boolean",
+                    "example": true
                   },
                   "contactType": {
                     "description": "Type of phone number",
@@ -428,6 +422,9 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
           }
         }
       },
@@ -463,6 +460,9 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
           }
         }
       }
@@ -585,6 +585,30 @@
                 "message": {
                   "type": "string",
                   "example": "Route or contact not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Resource already exists",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Contact with this phone number or email already exists"
                 }
               }
             }

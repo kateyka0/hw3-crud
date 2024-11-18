@@ -17,12 +17,6 @@ parameters:
       type: integer
       example: 10
   - in: query
-    name: sortBy
-    schema:
-      type: string
-      example: 'age'
-    description: "All student's fields can be mentioned. Default value - _id"
-  - in: query
     name: sortOrder
     schema:
       type: string
@@ -83,3 +77,5 @@ responses:
     $ref: '../../components/responses/401.yaml'
   '404':
     $ref: '../../components/responses/404.yaml'
+  '409':
+    $ref: '../../components/responses/409.yaml'
