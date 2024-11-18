@@ -33,25 +33,31 @@ export const getContactByIdController = async (req, res, next) => {
 };
 
 export const createContactController = async (req, res, next) => {
-    const photo = req.file;
-    let photoUrl;
+  const photo = req.file;
+  let photoUrl;
 
-    if (photo) {
-      try {
-        photoUrl = await saveFileToCloudinary(photo);
-        console.log(photoUrl);
-      } catch (error) {
-        console.log(error);
-        return next(createHttpError(500, 'Failed to upload photo to Cloudinary'));
-      }
+  
+  if (photo) {
+    try {
+      photoUrl = await saveFileToCloudinary(photo);
+    } catch  {
+      return next(createHttpError(500, 'Failed to upload photo to Cloudinary'));
     }
+  }
 
-    const payload = { ...req.body, userId: req.user._id, photo: photoUrl };
-    const contact = await createContact(payload);
+  const { email, ...rest } = req.body;
 
-    res.status(201).json({ status: 201, message: 'Successfully created a contact!', data: contact });
  
-}
+  const existingContact = await getAllContacts({ userId: req.user._id, email });
+  if (existingContact.length > 0) {
+    throw createHttpError(409, 'Contact with this email already exists'); 
+  }
+
+  const payload = { ...rest, email, userId: req.user._id, photo: photoUrl };
+  const contact = await createContact(payload);
+
+  res.status(201).json({ status: 201, message: 'Successfully created a contact!', data: contact });
+};
 
 export const patchContactController = async (req, res, next) => {
   try {
@@ -60,6 +66,7 @@ export const patchContactController = async (req, res, next) => {
     const photo = req.file;
     let photoUrl;
 
+    
     if (photo) {
       try {
         photoUrl = await saveFileToCloudinary(photo);
@@ -68,6 +75,7 @@ export const patchContactController = async (req, res, next) => {
       }
     }
 
+    
     const result = await updateContact(contactId, userId, { ...req.body, photo: photoUrl });
     if (!result) {
       throw createHttpError(404, 'Contact not found');
@@ -89,7 +97,7 @@ export const deleteContactController = async (req, res, next) => {
       throw createHttpError(404, 'Contact not found');
     }
 
-    res.status(204).send();
+    res.status(204).send(); 
   } catch (error) {
     next(error);
   }

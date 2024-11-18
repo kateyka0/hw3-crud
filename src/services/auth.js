@@ -24,7 +24,6 @@ export const registerUser = async (payload) => {
     password: encryptedPassword,
   });
 };
-
 export const loginUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
   if (!user) {

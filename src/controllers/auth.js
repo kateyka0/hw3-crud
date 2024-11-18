@@ -10,7 +10,15 @@ import {
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
-  try{
+  try {
+    const session = await registerUser(req.body.email);
+    if (session) {
+       return res.status(409).json({
+        message: 'Conflict: A user with this email already exists.',
+        data: {},
+      });
+    }
+
   const user = await registerUser(req.body);
 
   res.status(201).json({
@@ -28,6 +36,10 @@ export const registerUserController = async (req, res) => {
   });
 }
 };
+
+
+
+
 
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
