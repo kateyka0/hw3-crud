@@ -14,16 +14,31 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 
 export const registerUser = async (payload) => {
-  const user = await UsersCollection.findOne({ email: payload.email });
-  if (user) throw createHttpError(409, 'Email in use');
+  try {
+    console.log('Received payload:', payload);
 
-  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+    if (!payload.email || !payload.password) {
+      throw createHttpError(400, 'Email and password are required');
+    }
 
-  return await UsersCollection.create({
-    ...payload,
-    password: encryptedPassword,
-  });
+    const user = await UsersCollection.findOne({ email: payload.email });
+    if (user) throw createHttpError(409, 'Email in use');
+
+    const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+    const newUser = await UsersCollection.create({
+      ...payload,
+      password: encryptedPassword,
+    });
+
+    return newUser;
+  } catch (err) {
+    console.error('Error in registerUser:', err);
+    throw err;
+  }
 };
+
+
 export const loginUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
   if (!user) {
