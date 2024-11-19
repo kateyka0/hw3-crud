@@ -10,15 +10,6 @@ import {
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
-  try {
-    const session = await registerUser(req.body.email);
-    if (session) {
-       return res.status(409).json({
-        message: 'Conflict: A user with this email already exists.',
-        data: {},
-      });
-    }
-
   const user = await registerUser(req.body);
 
   res.status(201).json({
@@ -26,19 +17,7 @@ export const registerUserController = async (req, res) => {
     message: 'Successfully registered a user!',
     data: user,
   });
-} catch (error) {
-  console.error('Error in registerUserController:', error.message);
-  res.status(500).json({
-    message: 'Internal Server Error',
-    data: {
-      message: error.message,
-    },
-  });
 }
-};
-
-
-
 
 
 export const loginUserController = async (req, res) => {

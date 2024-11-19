@@ -10,6 +10,7 @@ import { sendEmailError } from './middlewares/sendEmailError.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 
+
 const PORT = Number(env('PORT', '3000'));
 
 export const setupServer = () => {
